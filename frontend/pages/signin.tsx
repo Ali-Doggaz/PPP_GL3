@@ -26,7 +26,7 @@ const Home: NextPage = () => {
           textAlign: 'center'
         }}>
           <img src="/logo.jpg" alt="logo.jpg" className={styles.img} />
-          <h2 className={styles.title}>Instafy</h2>
+          <h2 className={styles.title}>Instify</h2>
         </div>
         <br />
 
