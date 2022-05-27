@@ -1,0 +1,12 @@
+asgiref==3.5.2
+autopep8==1.6.0
+backports.zoneinfo==0.2.1
+bcrypt==3.2.2
+cffi==1.15.0
+Django==4.0.4
+djangorestframework==3.13.1
+pycodestyle==2.8.0
+pycparser==2.21
+pytz==2022.1
+sqlparse==0.4.2
+toml==0.10.2
