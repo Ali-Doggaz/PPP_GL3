@@ -1,17 +1,10 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { NextUIProvider,createTheme } from "@nextui-org/react";
-
+import 'tailwindcss/tailwind.css';
 
 const theme = createTheme({
-  type:"light",
-  theme:{
-    colors:{
-      primaryLight: "$pink400",
-      primary:"$pink400",
-      primaryDark: "$pink800"
-    }
-  }
+  type:"light"
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
