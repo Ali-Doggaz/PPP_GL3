@@ -18,12 +18,15 @@ const Home: NextPage = () => {
 		}, 300);
 	}, [router]);
 
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const handleSubmit = () => {
+		if (email && password) console.log(email, password);
+	};
 	return (
 		<div className={styles.container}>
 			<Card disappear={disappear}>
-				<div
-					className="w-full justify-center flex"
-				>
+				<div className="w-full justify-center flex">
 					<img src="/logo.jpg" alt="logo.jpg" className={styles.img} />
 				</div>
 				<br />
@@ -36,7 +39,14 @@ const Home: NextPage = () => {
 						flexDirection: "column",
 					}}
 				>
-					<Input label="Email" placeholder="Email"></Input>
+					<Input
+						label="Email"
+						placeholder="Email"
+						type={"email"}
+						onChange={(event) => {
+							setEmail(event.target.value);
+						}}
+					></Input>
 				</div>
 
 				{/* password input */}
@@ -47,7 +57,13 @@ const Home: NextPage = () => {
 						flexDirection: "column",
 					}}
 				>
-					<Input.Password label="Password" placeholder="Password"></Input.Password>
+					<Input.Password
+						label="Password"
+						placeholder="Password"
+						onChange={(event) => {
+							setPassword(event.target.value);
+						}}
+					></Input.Password>
 				</div>
 
 				<div style={{ marginBottom: "10px" }}>
@@ -57,7 +73,9 @@ const Home: NextPage = () => {
 				</div>
 
 				<div className={styles.bottom}>
-					<Button className="bg-pink-400">Sign In</Button>
+					<Button className="bg-pink-400" onClick={handleSubmit}>
+						Sign In
+					</Button>
 				</div>
 			</Card>
 		</div>
