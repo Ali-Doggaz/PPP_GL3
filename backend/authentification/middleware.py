@@ -23,8 +23,8 @@ class AuthMiddleware:
             return response
 
         # check if valid
-        token = request.headers["Auth-Token"]
-        print('checking if valid')
+        token = request.headers["Authorization"].split(' ')[1]
+
         try:
             connection = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         except:

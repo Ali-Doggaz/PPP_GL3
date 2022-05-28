@@ -15,8 +15,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 @api_view(['GET'])
 def getData(request):
 
-    token = request.headers["Auth-Token"]
-
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
 
