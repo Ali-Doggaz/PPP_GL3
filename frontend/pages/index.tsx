@@ -68,22 +68,22 @@ const Index: NextPage = () => {
 						</div>
 					</div>
 					{active[0] && activeSub[0] && (
-						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3">
+						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3 mb-10">
 							<FormFake />
 						</div>
 					)}
 					{active[0] && activeSub[1] && (
-						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3">
+						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3 mb-10">
 							<FormUpload />
 						</div>
 					)}
 					{active[0] && activeSub[2] && (
-						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3">
+						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3 mb-10">
 							<FormChangeAccount />
 						</div>
 					)}
 					{active[1] && activeSub[0] && (
-						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3">
+						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3 mb-10">
 							<FormDownload />
 						</div>
 					)}
