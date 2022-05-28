@@ -42,3 +42,16 @@ export const FormDownload = () => {
 		</form>
 	);
 };
+export const FormChangeAccount = () => {
+	return (
+		<form className="flex flex-col gap-4">
+			<label className="text-base">Username</label>
+			<input className="py-2 px-4 w-full border rounded-lg" type="text" />
+
+			<label className="text-base">Password</label>
+			<input className="py-2 px-4 w-full border rounded-lg" type="password" />
+			<Button className="bg-pink-600 mt-3">Change Account</Button>
+		</form>
+	);
+};
+
