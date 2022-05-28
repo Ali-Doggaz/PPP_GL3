@@ -3,5 +3,6 @@ from . import authentication
 
 urlpatterns = [
     path('', authentication.getData),
-    path('signup', authentication.signup)
+    path('signup', authentication.signup),
+    path('signin', authentication.signin)
 ]
