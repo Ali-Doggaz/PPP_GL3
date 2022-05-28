@@ -5,7 +5,7 @@ import { Input, Button, Link } from "@nextui-org/react";
 import { Text } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-
+import { setCookies } from 'cookies-next';
 const Home: NextPage = () => {
 	const router = useRouter();
 
@@ -20,8 +20,17 @@ const Home: NextPage = () => {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const handleSubmit = () => {
-		if (email && password) console.log(email, password);
+	const handleSubmit = async () => {
+		if (email && password) {
+			const res = await fetch("/api/login", {
+				method: "POST",
+				body: JSON.stringify({ email, password }),
+			}).then((t) => t.json());
+
+			const token = res.token;
+			console.log(token);
+			if (token) setCookies("JWT", token);
+		}
 	};
 	return (
 		<div className={styles.container}>
