@@ -2,8 +2,9 @@ import { Button, Checkbox, Input } from "@nextui-org/react";
 import { NextPage } from "next";
 import { useState } from "react";
 import { PieChart, Pie, Legend, RadialBar, RadialBarChart, Tooltip, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from "recharts";
-import { FormDownload, FormFake, FormUpload } from "../components/Forms";
+import { FormChangeAccount, FormDownload, FormFake, FormUpload } from "../components/Forms";
 import Menu from "../components/Menu";
+import { PicturesWrapper } from "../components/Pictures";
 import { Stats } from "../components/Stats";
 import { Submenu } from "../components/Submenu";
 import { Toast } from "../components/Toast";
@@ -54,11 +55,8 @@ const Index: NextPage = () => {
 	const [show, setShow] = useState(false);
 	return (
 		<div className="bg-gray-50 w-full min-h-screen flex flex-col md:flex-row gap-10 items-center md:items-start justify-center md:justify-start">
-			<Toast
-				setShow={setShow}
-				show={show}
-			/>
-			<div className="md:sticky top-0 left-0 w-fit m-0">
+			<Toast setShow={setShow} show={show} />
+			<div className="md:sticky top-0 left-0 w-fit m-0 shrink-0">
 				<Menu menu={menu} clickHandler={clickHandler} active={active} />
 			</div>
 			{active.findIndex((el) => el === true) !== -1 && (
@@ -79,9 +77,19 @@ const Index: NextPage = () => {
 							<FormUpload />
 						</div>
 					)}
+					{active[0] && activeSub[2] && (
+						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3">
+							<FormChangeAccount />
+						</div>
+					)}
 					{active[1] && activeSub[0] && (
 						<div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3">
 							<FormDownload />
+						</div>
+					)}
+                    {active[1] && activeSub[1] && (
+						<div className="w-full p-3 grow">
+							<PicturesWrapper pictures={[]} />
 						</div>
 					)}
 				</div>
