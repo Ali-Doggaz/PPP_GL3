@@ -1,0 +1,28 @@
+.container {
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.title {
+  font-family: 'Handlee';
+  font-weight: 400;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: -1px 0px 10px 2px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: -1px 0px 10px 2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: -1px 0px 10px 2px rgba(0, 0, 0, 0.1);
+}
