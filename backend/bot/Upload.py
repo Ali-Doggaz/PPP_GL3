@@ -36,7 +36,7 @@ def save(Descriptions, path):  # Save the new added Descriptions
         for url in Descriptions.keys():
             mycsv.writerow([url, Descriptions[url]])
 
-def upload(username1,password1, data_path):
+def upload(username1,password1, data_path, caption):
     Descriptions = load(data_path)
     mobile_emulation = {
         "deviceMetrics": { "width": 360, "height": 640, "pixelRatio": 3.0 },
