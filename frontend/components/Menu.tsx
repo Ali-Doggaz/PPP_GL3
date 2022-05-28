@@ -6,7 +6,7 @@ import { UserIcon } from "../public/icons/User.icon";
 
 export default function Menu(menu: { menu: MenuProps; clickHandler: (i: number) => void; active: boolean[] }) {
 	return (
-		<div className="h-fit p-5 box-sizing  w-[350px]">
+		<div className="h-fit p-5 box-sizing  w-full max-w-[350px]">
 			<div className="w-full py-10  bg-neutral-900 rounded-3xl text-white font-sans flex flex-col self-stretch drop-shadow-lg">
 				<div className="flex w-full justify-center mb-10">
 					<h1 className="text-2xl font-semibold tracking-widest"> instify </h1>

@@ -21,7 +21,7 @@ export const Submenu: React.FC<SubmenuProps> = ({ elements }) => {
 		console.log(active);
 	};
 	return (
-		<div className="p-5 box-sizing w-[600px]">
+		<div className="p-5 box-sizing w-full max-w-[600px]">
 			<div className="w-full py-10 bg-white rounded-3xl text-gray-800 font-sans flex flex-col self-stretch shadow-lg text-left">
 				{elements.map((el, index) => (
 					<div
