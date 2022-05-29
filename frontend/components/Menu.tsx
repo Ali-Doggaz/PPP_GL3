@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { MenuProps } from "../pages";
+import { LogoutIcon } from "../public/icons/Logout.icon";
 import { PictureIcon } from "../public/icons/Picture.icon";
 import { UrlIcon } from "../public/icons/Url.icon";
 import { UserIcon } from "../public/icons/User.icon";
@@ -28,6 +29,10 @@ export default function Menu(menu: { menu: MenuProps; clickHandler: (i: number) 
 				>
 					<PictureIcon className="w-4 h-4 stroke-white" />
 					<h1 className="text-base font-normal tracking-widest">Manage Pictures</h1>
+				</div>
+				<div className={clsx("flex w-full justify-left gap-3 items-center py-5 px-10 cursor-pointer hover:bg-pink-800 transition-all duration-300")}>
+					<LogoutIcon className="w-4 h-4 stroke-white" />
+					<h1 className="text-base font-normal tracking-widest">Logout</h1>
 				</div>
 				<div className="w-full mt-20 flex justify-center text-center flex-col">
 					<p className="text-sm">

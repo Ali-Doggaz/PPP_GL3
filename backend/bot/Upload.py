@@ -36,8 +36,7 @@ def save(Descriptions, path):  # Save the new added Descriptions
         for url in Descriptions.keys():
             mycsv.writerow([url, Descriptions[url]])
 
-def upload(username1,password1, data_path, caption):
-    Descriptions = load(data_path)
+def upload(username1,password1, ImagePath, description):
     mobile_emulation = {
         "deviceMetrics": { "width": 360, "height": 640, "pixelRatio": 3.0 },
         "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19" }
@@ -58,17 +57,6 @@ def upload(username1,password1, data_path, caption):
 
     driver.get('https://www.instagram.com/' + username1)
 
-    #gets the image path
-    images_path = data_path + os.sep + 'Images'
-    for file in os.listdir(images_path):
-        if file.endswith('jpg') or file.endswith('jpeg') or file.endswith('png'):
-            name = file
-
-    #TODO ImagePath = r'C:\Users\AliDo\PycharmProjects\Clean_Insta_Bot\Images' + f'\{name}'
-    ImagePath = images_path + f'\{name}'
-    url = f'{name}'
-    url = fr'Images\{url}'
-
     #upload
     ActionChains(driver).move_to_element( driver.find_element_by_xpath("""//*[@id="react-root"]/section/nav[2]/div/div/div[2]/div/div/div[3]""")).click().perform()
     handle = "[CLASS:#32770; TITLE:Open]"
@@ -86,14 +74,6 @@ def upload(username1,password1, data_path, caption):
     txt = driver.find_element_by_class_name('_472V_')
     txt.send_keys('')
     txt = driver.find_element_by_class_name('_472V_')
-
-    if url in Descriptions:
-        description = Descriptions[url]
-        Descriptions.pop(url, None)
-        save(Descriptions, data_path)
-    else:
-        description = ''
-        #TODO automatically generate a caption with ML/NLP
 
     txt.send_keys(description)
     txt.send_keys(Keys.ENTER)

@@ -116,16 +116,14 @@ class InstagramBot:
                 driver.get(pic_href)
                 time.sleep(random.randint(2, 4))
                 try:
-                    Element = driver.find_element_by_xpath(
-                        '/html/body/div[1]/section/main/div/div/article/div[3]/section[1]/span[1]')
-                    Element.click()
+                    like_button = driver.find_elements_by_class_name(
+                        'fr66n')[0]
+                    like_button.click()
                     like = like + 1
-                    if follows < max_follow and int(driver.find_element_by_xpath(
-                            '/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[2]/div/div/button/span').text) < 150:
-                        if driver.find_element_by_xpath(
-                                '/html/body/div[1]/section/main/div/div[1]/article/header/div[2]/div[1]/div[2]/button').text == 'Follow':
-                            driver.find_element_by_xpath(
-                                '/html/body/div[1]/section/main/div/div[1]/article/header/div[2]/div[1]/div[2]/button').click()
+                    time.sleep(random.randint(2, 4))
+                    if follows < max_follow and int(driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[2]/div/div/button/span').text)<150:
+                        if driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/header/div[2]/div[1]/div[2]/button').text == 'Follow':
+                            driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[1]/article/header/div[2]/div[1]/div[2]/button').click()
                             follows = follows + 1
                             time.sleep(2)
                         time.sleep(random.randint(2, 4))
@@ -147,7 +145,8 @@ class InstagramBot:
                         print_same_line("#" + hashtag + ': unique photos left: ' + str(unique_photos)
                                         + " | Sleeping " + str(second))
                         time.sleep(1)
-                except Exception:
+                except Exception as e:
+                    print(e)
                     time.sleep(2)
 
             else:
