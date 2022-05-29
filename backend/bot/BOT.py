@@ -7,7 +7,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
-from service import HiddenChromeService, HiddenChromeWebDriver
+from .service import HiddenChromeService, HiddenChromeWebDriver
+from webdriver_manager.chrome import ChromeDriverManager
+
+chromedriver= ChromeDriverManager().install()
 
 like = 0
 images_file_path = ''
@@ -49,9 +52,9 @@ class InstagramBot:
             options = Options()
             options.add_argument('--headless')
             options.add_argument('--disable-gpu')
-            self.driver = HiddenChromeWebDriver('chromedriver.exe', chrome_options=options)
+            self.driver = HiddenChromeWebDriver(chromedriver, chrome_options=options)
         else:
-            self.driver = HiddenChromeWebDriver('chromedriver.exe')
+            self.driver = HiddenChromeWebDriver(chromedriver)
 
 
         self.driver.implicitly_wait(20)

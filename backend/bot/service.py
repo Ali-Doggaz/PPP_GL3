@@ -16,6 +16,7 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common import utils
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.chrome import service, webdriver, remote_connection
+# from selenium.webdriver.remote import remote_connection
 
 class HiddenChromeService(service.Service):
 

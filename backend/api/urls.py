@@ -1,8 +1,15 @@
 from django.urls import path
 from . import authentication
+from . import bot
 
 urlpatterns = [
-    path('', authentication.getData),
-    path('signup', authentication.signup),
-    path('signin', authentication.signin)
+
+    # authentication routes
+    path('auth', authentication.getData),
+    path('auth/signup', authentication.signup),
+    path('auth/signin', authentication.signin),
+
+    # bot routes(require authentication)
+    path('likephoto', bot.likePhoto),
+    path('download', bot.downloadPictures)
 ]
