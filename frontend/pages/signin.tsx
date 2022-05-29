@@ -5,7 +5,7 @@ import { Input, Button, Link } from "@nextui-org/react";
 import { Text } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import { setCookies } from 'cookies-next';
+import { getCookies, setCookies } from "cookies-next";
 const Home: NextPage = () => {
 	const router = useRouter();
 
@@ -18,18 +18,36 @@ const Home: NextPage = () => {
 		}, 300);
 	}, [router]);
 
-	const [email, setEmail] = useState("");
+	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const handleSubmit = async () => {
-		if (email && password) {
-			const res = await fetch("/api/login", {
-				method: "POST",
-				body: JSON.stringify({ email, password }),
-			}).then((t) => t.json());
 
-			const token = res.token;
-			console.log(token);
-			if (token) setCookies("JWT", token);
+	const [wrong, setWrong] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const handleSubmit = async () => {
+		if (!loading) {
+			setLoading(true);
+			if (username && password) {
+				try {
+					const res = await fetch("http://localhost:8000/auth/signin", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ username, password }),
+					}).then((t) => {
+						if (t.status === 400) return null;
+						return t.json();
+					});
+					if (res) {
+						const token = res.token;
+						if (token) setCookies("JWT", token);
+						router.push("/");
+					} else setWrong(true);
+				} catch (e) {
+					setWrong(true);
+				}
+			}
+			setLoading(false);
 		}
 	};
 	return (
@@ -39,8 +57,12 @@ const Home: NextPage = () => {
 					<img src="/logo.jpg" alt="logo.jpg" className={styles.img} />
 				</div>
 				<br />
-
-				{/* email input */}
+				{wrong && (
+					<div className="p-6 rounded-xl mb-5 w-full flex justify-center bg-red-200 text-red-600 border border-red-100 text-sm">
+						<p>Make sure the form is valid or email is already used</p>
+					</div>
+				)}
+				{/* username input */}
 				<div
 					style={{
 						marginBottom: "10px",
@@ -49,11 +71,11 @@ const Home: NextPage = () => {
 					}}
 				>
 					<Input
-						label="Email"
-						placeholder="Email"
-						type={"email"}
+						label="Username"
+						placeholder="username"
+						type={"text"}
 						onChange={(event) => {
-							setEmail(event.target.value);
+							setUsername(event.target.value);
 						}}
 					></Input>
 				</div>
