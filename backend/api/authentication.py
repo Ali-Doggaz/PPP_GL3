@@ -18,6 +18,8 @@ def getData(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
 
+    print('hello')
+
     return Response({
         "data" : serializer.data,
         "user": request.GET["user"]
