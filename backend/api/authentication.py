@@ -39,11 +39,11 @@ def signup(request):
         if (user["email"] == data["email"]):
             return Response("email already in use", status=400)
 
-    # transforming password
-    salt = bcrypt.gensalt()
-    data["password"] = data["password"].encode('utf-8')
-    hash = bcrypt.hashpw(data["password"], salt)
-    data["password"] = hash.decode('utf-8')
+    # # transforming password
+    # salt = bcrypt.gensalt()
+    # data["password"] = data["password"].encode('utf-8')
+    # hash = bcrypt.hashpw(data["password"], salt)
+    # data["password"] = hash.decode('utf-8')
 
     # saving new user
     newSerializer = UserSerializer(data=data)
@@ -76,7 +76,7 @@ def signin(request):
     # check if password is right
     encodedPass = data["password"].encode('utf-8')
     encodedHash = found["password"].encode('utf-8')
-    validPass = bcrypt.checkpw(encodedPass, encodedHash)
+    validPass = data["password"] == found["password"]
     if not validPass:
         return Response("password is not valid", status=400)
 
