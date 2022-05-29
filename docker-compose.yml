@@ -1,0 +1,36 @@
+version: "3.3"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: ./backend
+    command: python backend/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+  # nextjs:
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   build: ./frontend
+  #   command: ls frontend
+  #   volumes:
+  #     - .:/usr/src/app/frontend
+  #     - /usr/src/app/frontend/node_modules
+  #     - /usr/src/app/frontend.next
+  #   depends_on:
+  #     - web
