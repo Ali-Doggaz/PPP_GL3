@@ -12,6 +12,13 @@ export default function middleware(req: NextRequest) {
 			return NextResponse.redirect(origin + "/signin");
 		}
 	}
-
+	if (pathname === "/signin" || pathname === "/signup") {
+		if (jwtCookie !== undefined) return NextResponse.redirect(origin + "/");
+		try {
+			return NextResponse.next();
+		} catch (e) {
+			return NextResponse.redirect(origin + "/signin");
+		}
+	}
 	return NextResponse.next();
 }
