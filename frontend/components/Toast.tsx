@@ -4,7 +4,7 @@ import { SuccessBigIcon, CloudIcon } from "../public/icons/Success.icon";
 export const Toast = (elements: { setShow: (a: boolean) => void; show: boolean }) => {
 	if (elements.show)
 		return (
-			<div className="w-full h-full bg-gray-600 absolute top-0 left-0 z-30 bg-opacity-20 flex justify-center items-center">
+			<div className="w-screen h-screen bg-gray-600 absolute top-0 left-0 z-30 bg-opacity-20 flex justify-center items-center">
 				<div className="relative w-full max-w-[1000px] p-20 bg-white rounded-lg flex flex-col justify-center items-center gap-6 overflow-hidden">
 					<div
 						className="absolute top-10 right-10 cursor-pointer"
