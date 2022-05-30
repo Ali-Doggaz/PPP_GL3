@@ -89,7 +89,7 @@ def removePictures(request):
 @api_view(["DELETE"])
 def removePicture(request): 
     user = request.GET["user"]
-    pictureNumber = request.data["picture-number"]
+    pictureNumber = request.data["image-number"]
 
     # user path
     os.chdir(PATH)
@@ -100,7 +100,13 @@ def removePicture(request):
         return Response('No images', 400)
     images_path= data_path+"/Images"
 
-    return Response()
+    # removing specific file
+    image_path = images_path+"/image"+str(pictureNumber)+".jpg"
+    if not os.path.isfile(image_path):
+        return Response("image not found")
+    
+    os.remove(image_path)
+    return Response("success")
 
 
 
@@ -108,6 +114,7 @@ def removePicture(request):
 @api_view(['POST'])
 def uploadPicutres(request):
     user = request.GET["user"]
+    picture = request.data["picture"]
     description = "uploaded via InstaBot"
 
     entireUser = getEntireUser(user)
@@ -125,11 +132,34 @@ def uploadPicutres(request):
     if len(images_list) ==0:
         return Response("there is no image",404)
     
-    image_path = images_path+"\\Images\\"+images_list[0]
+    print(images_list)
+    if not picture in images_list:
+        return Response("image doesn't exist",400)
+    
+    image_path = images_path+"\\Images\\"+picture
 
     upload(username, password, image_path, description)
 
     return Response("success")
+
+
+@api_view(['GET'])
+def getPictures(request): 
+    user = request.GET["user"]
+    
+    # user path
+    os.chdir(PATH)
+    data_path= os.getcwd()+'/static/'+str(user["id"])
+    if not os.path.isdir(data_path):
+        return Response([])
+    if not os.path.isdir(data_path+"/Images"):
+        return Response([])
+    images_path= data_path+"/Images"
+    
+    images_list = os.listdir(images_path)
+    print(images_list)
+
+    return Response(images_list)
 
 # edit pictures
 
