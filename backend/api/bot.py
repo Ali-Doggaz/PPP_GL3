@@ -57,7 +57,10 @@ def downloadPictures(request):
         os.mkdir(data_path+"/Images")
 
     # print(data_path)
-    download_reddit_PRAWN(number, subreddit_name, data_path)
+    try:
+        download_reddit_PRAWN(number, subreddit_name, data_path)
+    except:
+        print("completed")
 
     return Response('success')
 
@@ -81,7 +84,25 @@ def removePictures(request):
         os.remove(images_path+"/"+image_path)
 
     return Response("removed images")
-    
+
+#remove picture
+@api_view(["DELETE"])
+def removePicture(request): 
+    user = request.GET["user"]
+    pictureNumber = request.data["picture-number"]
+
+    # user path
+    os.chdir(PATH)
+    data_path= os.getcwd()+'/static/'+str(user["id"])
+    if not os.path.isdir(data_path):
+        return Response('No images', 400)
+    if not os.path.isdir(data_path+"/Images"):
+        return Response('No images', 400)
+    images_path= data_path+"/Images"
+
+    return Response()
+
+
 
 #upload pictures 
 @api_view(['POST'])
@@ -104,7 +125,7 @@ def uploadPicutres(request):
     if len(images_list) ==0:
         return Response("there is no image",404)
     
-    image_path = images_list[0]
+    image_path = images_path+"\\Images\\"+images_list[0]
 
     upload(username, password, image_path, description)
 

@@ -40,7 +40,7 @@ def save(Descriptions, path):  # Save the new added Descriptions
 def upload(username1,password1, ImagePath, description):
     mobile_emulation = {
         "deviceMetrics": { "width": 360, "height": 640, "pixelRatio": 3.0 },
-        "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19" }
+        "userAgent": "Mozilla/5.0 (Linux; Android 7.0; SM-A310F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.91 Mobile Safari/537.36" }
     chrome_options = Options()
     chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 
@@ -52,14 +52,14 @@ def upload(username1,password1, ImagePath, description):
     time.sleep(2)
     driver.find_element_by_name("username").send_keys(username1)
     driver.find_element_by_name("password").send_keys(password1)
-    driver.find_element_by_xpath('/html/body/div[1]/section/main/article/div/div/div/form/div[1]/div[6]/button').click()
-
+    driver.find_element_by_xpath('/html/body/div[1]/section/main/div[1]/div/div/div[2]/form/div[1]/div[6]/button').click()
+                                
     time.sleep(3)
 
     driver.get('https://www.instagram.com/' + username1)
 
     #upload
-    ActionChains(driver).move_to_element( driver.find_element_by_xpath("""//*[@id="react-root"]/section/nav[2]/div/div/div[2]/div/div/div[3]""")).click().perform()
+    ActionChains(driver).move_to_element( driver.find_element_by_xpath("""/html/body/div[1]/section/nav[2]/div/div/div/div/div/div[3]""")).click().perform()
     handle = "[CLASS:#32770; TITLE:Open]"
     autoit.win_wait(handle, 3)
     time.sleep(1)
