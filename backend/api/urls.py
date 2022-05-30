@@ -11,5 +11,7 @@ urlpatterns = [
 
     # bot routes(require authentication)
     path('likephoto', bot.likePhoto),
-    path('download', bot.downloadPictures)
+    path('download', bot.downloadPictures),
+    path('upload', bot.uploadPicutres),
+    path('remove-images', bot.removePictures)
 ]

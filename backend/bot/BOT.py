@@ -11,6 +11,7 @@ from .service import HiddenChromeService, HiddenChromeWebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 chromedriver= ChromeDriverManager().install()
+print(chromedriver)
 
 like = 0
 images_file_path = ''

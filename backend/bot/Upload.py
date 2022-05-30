@@ -6,6 +6,7 @@ import time
 import autoit
 import csv
 from selenium.webdriver.common.keys import Keys
+from .BOT import chromedriver
 
 def load(data_path):
     data = dict()
@@ -43,7 +44,7 @@ def upload(username1,password1, ImagePath, description):
     chrome_options = Options()
     chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 
-    driver = webdriver.Chrome(chrome_options = chrome_options)
+    driver = webdriver.Chrome(chromedriver,chrome_options = chrome_options)
 
     #Login
 

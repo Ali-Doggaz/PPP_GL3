@@ -64,6 +64,7 @@ def signin(request):
     users = User.objects.all()
     allSerializer = UserSerializer(users, many=True)
 
+    print("serialize passed")
     # checking if user exists
     found = None
     for user in allSerializer.data:
@@ -73,12 +74,15 @@ def signin(request):
     if found == None:
         return Response("username/email not valid", 400)
 
+    print("user exist passed")
     # check if password is right
     encodedPass = data["password"].encode('utf-8')
     encodedHash = found["password"].encode('utf-8')
     validPass = data["password"] == found["password"]
     if not validPass:
         return Response("password is not valid", status=400)
+
+    print("password verif passed")
 
     # sign jwt here
     found.pop("password", None)
@@ -88,6 +92,8 @@ def signin(request):
         "logTime": datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     }
     token = jwt.encode(toEncode, SECRET_KEY, algorithm="HS256")
+
+    print("signature passed")    
 
     return Response({
         "message": "success",

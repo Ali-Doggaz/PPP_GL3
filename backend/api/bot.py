@@ -1,5 +1,4 @@
 import os
-from socket import TIPC_MEDIUM_IMPORTANCE
 from time import time
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -7,7 +6,7 @@ from authentification.models import User
 from .serializers import UserSerializer
 from bot.BOT import InstagramBot
 from bot.Download_Trending_Pictures_From_Reddit import download_reddit_PRAWN
-# from bot.Upload import upload
+from bot.Upload import upload
 
 PATH= os.getcwd()
 
@@ -23,6 +22,10 @@ def likePhoto(request):
 
     # getting data
     # para
+    tags= request.data["tags"]
+    follows = request.data["follows"]
+    max_follows = request.data["max-follows"]
+    max_likes = request.data["max-likes"]
 
     # getting user
     user = request.GET["user"]
@@ -30,13 +33,10 @@ def likePhoto(request):
 
     ig = InstagramBot(user["username"],user["password"], True)
     logged = ig.login()
-    # ig.like_photo(tags[0], tags, follow, int(max_follows), int(max_likes), [], msg,
-    #                                        IMAGES_FILE_PATH, True)
+    ig.like_photo(tags[0], tags, follows, int(max_follows), int(max_likes))
 
     if logged == 0 :
         return Response('failure')
-
-
 
     return Response('success')
 
@@ -59,23 +59,55 @@ def downloadPictures(request):
     # print(data_path)
     download_reddit_PRAWN(number, subreddit_name, data_path)
 
-    return Response()
+    return Response('success')
 
+# remove pictures
+@api_view(["DELETE"])
+def removePictures(request): 
+    user = request.GET["user"]
+    
+    # user path
+    os.chdir(PATH)
+    data_path= os.getcwd()+'/static/'+str(user["id"])
+    if not os.path.isdir(data_path):
+        return Response('No images', 400)
+    if not os.path.isdir(data_path+"/Images"):
+        return Response('No images', 400)
+    images_path= data_path+"/Images"
+    
+    # removing files
+    images_list= os.listdir(images_path)
+    for image_path in images_list:
+        os.remove(images_path+"/"+image_path)
+
+    return Response("removed images")
+    
 
 #upload pictures 
 @api_view(['POST'])
 def uploadPicutres(request):
     user = request.GET["user"]
-    description = "hahahah hahahah"
+    description = "uploaded via InstaBot"
+
+    entireUser = getEntireUser(user)
+    username= entireUser["username"]
+    password = entireUser["password"]
+
     
     os.chdir(PATH)
-    images_path= os.getcwd() +"/static/"+str(user["id"])
-    
-    images_list = os.listdir(images_path)
-    if images_list.length ==0:
+    images_path= os.getcwd() +"\\static\\"+str(user["id"])
+    print(images_path+"\\Images")
+
+    images_list = os.listdir(images_path+"\\Images")
+    print(images_list)
+
+    if len(images_list) ==0:
         return Response("there is no image",404)
+    
     image_path = images_list[0]
-    print(image_path)
+
+    upload(username, password, image_path, description)
+
     return Response("success")
 
 # edit pictures
