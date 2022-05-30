@@ -13,5 +13,7 @@ urlpatterns = [
     path('likephoto', bot.likePhoto),
     path('download', bot.downloadPictures),
     path('upload', bot.uploadPicutres),
-    path('remove-images', bot.removePictures)
+    path('remove-images', bot.removePictures),
+    path('remove', bot.removePicture),
+    path('pictures', bot.getPictures)
 ]

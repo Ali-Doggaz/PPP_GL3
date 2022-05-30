@@ -5,7 +5,7 @@ import json
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-WITHOUT_AUTH = ['/auth/signin','/auth/signup']
+WITHOUT_AUTH = ['/auth/signin','/auth/signup','/static','/favicon.ico']
 
 
 class AuthMiddleware:
@@ -15,6 +15,7 @@ class AuthMiddleware:
     def __call__(self, request):
 
         path = request.path
+        print(path)
 
         foundRoutes = list(filter(lambda x: path.startswith(x), WITHOUT_AUTH))
 
