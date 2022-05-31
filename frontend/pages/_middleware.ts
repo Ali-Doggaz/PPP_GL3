@@ -5,7 +5,7 @@ export default async function middleware(req: NextRequest) {
 	const jwtCookie = cookies.JWT;
 	const { pathname, origin } = req.nextUrl;
 
-	if (pathname === "/signup" || pathname === "/signin") {
+	if (pathname === "/signup" || pathname === "/signin" || pathname === "/home") {
 		if (jwtCookie) {
 			try {
 				const res = await fetch("http://localhost:8000/auth", {
@@ -23,7 +23,7 @@ export default async function middleware(req: NextRequest) {
 			}
 		}
 	} else {
-		if (jwtCookie === undefined) return NextResponse.redirect(origin + "/signin");
+		if (jwtCookie === undefined) return NextResponse.redirect(origin + "/home");
 		try {
 			const res = await fetch("http://localhost:8000/auth", {
 				method: "GET",
@@ -34,9 +34,9 @@ export default async function middleware(req: NextRequest) {
 			}).then((t) => t.json());
 			console.log(res);
 			if (res.data && res.data.length > 0) return NextResponse.next();
-			return NextResponse.redirect(origin + "/signin");
+			return NextResponse.redirect(origin + "/home");
 		} catch (e) {
-			return NextResponse.redirect(origin + "/signin");
+			return NextResponse.redirect(origin + "/home");
 		}
 	}
 	return NextResponse.next();
