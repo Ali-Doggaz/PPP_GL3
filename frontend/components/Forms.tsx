@@ -18,14 +18,6 @@ export const FormFake = () => {
     const tags = tagss.split(",");
 
     const jwtCookie = getCookie("JWT");
-    console.log(
-      JSON.stringify({
-        tags,
-        "max-likes": max_likes,
-        follows,
-        "max-follows": max_follows,
-      })
-    );
     if (!loading) {
       setLoading(true);
       if (tags && max_likes && follows && max_follows) {
@@ -142,7 +134,6 @@ export const FormUpload = () => {
             Authorization: "Bearer " + jwtCookie,
           },
         }).then((t) => t.json());
-        console.log(auth.user);
         setPictures(
           res.map((el: any) => {
             return {

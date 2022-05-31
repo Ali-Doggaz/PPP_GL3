@@ -15,7 +15,6 @@ export default async function middleware(req: NextRequest) {
 						"Content-Type": "application/json",
 					},
 				}).then((t) => t.json());
-				console.log(res);
 				if (res.data && res.data.length > 0) return NextResponse.redirect(origin);
 				return NextResponse.next();
 			} catch (e) {
@@ -32,7 +31,6 @@ export default async function middleware(req: NextRequest) {
 					"Content-Type": "application/json",
 				},
 			}).then((t) => t.json());
-			console.log(res);
 			if (res.data && res.data.length > 0) return NextResponse.next();
 			return NextResponse.redirect(origin + "/home");
 		} catch (e) {

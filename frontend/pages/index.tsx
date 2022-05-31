@@ -106,7 +106,6 @@ const Index: NextPage = () => {
             Authorization: "Bearer " + jwtCookie,
           },
         }).then((t) => t.json());
-        console.log(auth.user);
         setPictures(
           res.map((el: any) => {
             return {

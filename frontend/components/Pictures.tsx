@@ -99,7 +99,6 @@ export const PictureCardUpload: React.FC<PictureProps> = ({
   const clickHandler = async () => {
     if (!loading) {
       setLoading(true);
-      console.log(imageraw);
       if (image) {
         try {
           const res = await fetch("http://localhost:8000/upload", {
