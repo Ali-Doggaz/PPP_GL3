@@ -35,7 +35,7 @@ function Landing() {
                 ></Button>
               </div>
               <a
-                href="https://github.com/Dopeamin/github-repositories-fetch/blob/master/README.md"
+                href="https://github.com/Ali-Doggaz/PPP_GL3/blob/main/README.md"
                 target="_blank"
               >
                 <Button
