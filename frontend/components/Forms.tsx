@@ -1,8 +1,9 @@
 import { Checkbox, Button } from "@nextui-org/react";
 import { getCookie, getCookies } from "cookies-next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
+import { PicturesWrapper } from "./Pictures";
 import { Toast } from "./Toast";
 export const FormFake = () => {
   const [tagss, setTags] = useState("");
@@ -122,15 +123,45 @@ export const FormFake = () => {
   );
 };
 export const FormUpload = () => {
-  return (
-    <form className="flex flex-col gap-4">
-      <label className="text-base">
-        This will upload the most recent picture in your database
-        (download/added manually).
-      </label>
-      <Button className="bg-pink-600 mt-3">Upload</Button>
-    </form>
-  );
+  const jwtCookie = getCookie("JWT");
+  const [pictures, setPictures] = useState();
+  useEffect(() => {
+    const data = async () => {
+      try {
+        const res = await fetch("http://localhost:8000/pictures", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + jwtCookie,
+          },
+        }).then((t) => t.json());
+        const auth = await fetch("http://localhost:8000/auth", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + jwtCookie,
+          },
+        }).then((t) => t.json());
+        console.log(auth.user);
+        setPictures(
+          res.map((el: any) => {
+            return {
+              image:
+                "http://localhost:8000/static/" +
+                auth.user.id +
+                "/images/" +
+                el,
+              imageraw: el,
+              caption:
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ex, ea at quidem tenetur dicta cupiditate accusantium, ad iusto soluta",
+            };
+          })
+        );
+      } catch (e) {}
+    };
+    data().catch(console.error);
+  }, []);
+  return <PicturesWrapper isUpload={true} pictures={pictures || []} />;
 };
 export const FormDownload = () => {
   const [subredit_name, setSubreditName] = useState("");

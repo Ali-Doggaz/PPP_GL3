@@ -53,7 +53,7 @@ export default function Menu(menu: {
         </div>
         <div
           className={clsx(
-            "flex w-full justify-left gap-3 items-center py-5 px-10 cursor-pointer hover:bg-pink-800 transition-all duration-300"
+            "flex w-full justify-start gap-3 items-center py-5 px-10 cursor-pointer hover:bg-pink-800 transition-all duration-300"
           )}
           onClick={logout}
         >

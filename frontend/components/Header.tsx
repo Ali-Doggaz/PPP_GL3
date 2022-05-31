@@ -12,7 +12,7 @@ function Header() {
     return (
       <div className="full-container head background-white">
         <div className="container">
-          <div className="header flex flex-12 space-between p-10">
+          <div className="header flex items-center justify-center flex-12 space-between p-10">
             <div className="content flex-3">
               <a href="/">
                 <h1 className="header-1 p-5">INSTIFY</h1>
@@ -27,7 +27,7 @@ function Header() {
               <Button
                 type="primary"
                 text="Get started free"
-                className="mr-10"
+                className="mr-10 none-small"
                 click={clickHandler}
               ></Button>
               <a
