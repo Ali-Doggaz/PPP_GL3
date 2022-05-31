@@ -89,7 +89,7 @@ def removePictures(request):
 @api_view(["DELETE"])
 def removePicture(request): 
     user = request.GET["user"]
-    pictureNumber = request.data["image-number"]
+    pictureName = request.data["image-name"]
 
     # user path
     os.chdir(PATH)
@@ -101,7 +101,7 @@ def removePicture(request):
     images_path= data_path+"/Images"
 
     # removing specific file
-    image_path = images_path+"/image"+str(pictureNumber)+".jpg"
+    image_path = images_path+"/"+ pictureName
     if not os.path.isfile(image_path):
         return Response("image not found")
     
