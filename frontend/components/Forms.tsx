@@ -152,9 +152,19 @@ export const FormUpload = () => {
     };
     data().catch(console.error);
   }, []);
-  return <PicturesWrapper isUpload={true} pictures={pictures || []} />;
+  return (
+    <PicturesWrapper
+      isUpload={true}
+      pictures={pictures || []}
+      refresh={0}
+      setRefresh={function (i: number): void {}}
+    />
+  );
 };
-export const FormDownload = () => {
+export const FormDownload = (form: {
+  refresh: number;
+  setRefresh: (i: number) => void;
+}) => {
   const [subredit_name, setSubreditName] = useState("");
   const [number, setNumber] = useState(0);
 
@@ -183,6 +193,7 @@ export const FormDownload = () => {
             return t.json();
           });
           if (res) {
+            form.setRefresh(form.refresh + 1);
             router.push("/");
           } else setWrong(true);
         } catch (e) {

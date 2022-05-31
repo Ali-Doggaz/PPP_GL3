@@ -89,6 +89,7 @@ const Index: NextPage = () => {
   const [show, setShow] = useState(false);
   const jwtCookie = getCookie("JWT");
   const [pictures, setPictures] = useState();
+  const [refresh, setRefresh] = useState(0);
   useEffect(() => {
     const data = async () => {
       try {
@@ -114,6 +115,7 @@ const Index: NextPage = () => {
                 auth.user.id +
                 "/images/" +
                 el,
+              imageraw: el,
               caption:
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ex, ea at quidem tenetur dicta cupiditate accusantium, ad iusto soluta",
             };
@@ -122,7 +124,7 @@ const Index: NextPage = () => {
       } catch (e) {}
     };
     data().catch(console.error);
-  }, []);
+  }, [refresh]);
   return (
     <div className="bg-gray-50 w-full min-h-screen flex flex-col md:flex-row gap-10 items-center md:items-start justify-center md:justify-start">
       <Toast setShow={setShow} show={show} />
@@ -160,12 +162,16 @@ const Index: NextPage = () => {
           )}
           {active[1] && activeSub[0] && (
             <div className="bg-white rounded-3xl shadow-lg p-10 w-full max-w-[1000px] md:ml-3 mb-10">
-              <FormDownload />
+              <FormDownload refresh={refresh} setRefresh={setRefresh} />
             </div>
           )}
           {active[1] && activeSub[1] && (
             <div className="w-full p-3 grow">
-              <PicturesWrapper pictures={pictures || []} />
+              <PicturesWrapper
+                pictures={pictures || []}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
             </div>
           )}
         </div>

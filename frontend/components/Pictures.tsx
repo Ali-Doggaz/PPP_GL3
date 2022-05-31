@@ -2,10 +2,14 @@ interface PictureProps {
   image: string;
   imageraw?: string;
   caption: string;
+  refresh: number;
+  setRefresh: (i: number) => void;
 }
 interface PicturesWrapperProps {
   pictures: PictureProps[];
   isUpload?: boolean;
+  refresh: number;
+  setRefresh: (i: number) => void;
 }
 import picture from "../public/images/background.jpg";
 import Image from "next/image";
@@ -17,18 +21,68 @@ import Button from "./Button";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import ReactLoading from "react-loading";
+import { TrashIcon } from "../public/icons/Trash.icon";
 export const PicturesWrapper: React.FC<PicturesWrapperProps> = ({
   pictures,
   isUpload = false,
+  refresh,
+  setRefresh,
 }) => {
+  const router = useRouter();
+  const [wrong, setWrong] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const jwtCookie = getCookie("JWT");
+  const [editable, setEditable] = useState(false);
+  const deleteAllImages = async (image: string) => {
+    if (!loading) {
+      setLoading(true);
+      if (image) {
+        try {
+          const res = await fetch("http://localhost:8000/remove-images", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + jwtCookie,
+            },
+          }).then((t) => {
+            if (t.status === 400) return null;
+            return t.json();
+          });
+          if (res) {
+            setRefresh(refresh + 1);
+            router.push("/");
+          } else setWrong(true);
+        } catch (e) {
+          router.push("/");
+          setWrong(true);
+        }
+      }
+      setLoading(false);
+    }
+  };
   if (!isUpload)
     return (
-      <div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 lg:pr-10">
-        {pictures.map((picture) => {
-          return (
-            <PictureCard image={picture.image} caption={picture.caption} />
-          );
-        })}
+      <div className="flex flex-col gap-10 items-center">
+        <Button
+          type="primary"
+          text="Delete All images"
+          className="w-full"
+          click={deleteAllImages}
+        ></Button>
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 lg:pr-10">
+          {pictures.map((picture) => {
+            return (
+              <PictureCard
+                image={picture.image}
+                caption={picture.caption}
+                imageraw={picture.imageraw || ""}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   return (
@@ -39,14 +93,57 @@ export const PicturesWrapper: React.FC<PicturesWrapperProps> = ({
             image={picture.image}
             caption={picture.caption}
             imageraw={picture.imageraw || ""}
+            refresh={refresh}
+            setRefresh={setRefresh}
           />
         );
       })}
     </div>
   );
 };
-export const PictureCard: React.FC<PictureProps> = ({ image, caption }) => {
+export const PictureCard: React.FC<PictureProps> = ({
+  image,
+  caption,
+  imageraw,
+  refresh,
+  setRefresh,
+}) => {
+  const router = useRouter();
+  const [wrong, setWrong] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const jwtCookie = getCookie("JWT");
   const [editable, setEditable] = useState(false);
+  const deleteImage = async (image: string) => {
+    if (!loading) {
+      setLoading(true);
+      if (image) {
+        try {
+          const res = await fetch("http://localhost:8000/remove", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + jwtCookie,
+            },
+            body: JSON.stringify({
+              "image-name": image,
+            }),
+          }).then((t) => {
+            if (t.status === 400) return null;
+            return t.json();
+          });
+          if (res) {
+            setRefresh(refresh + 1);
+            router.push("/");
+          } else setWrong(true);
+        } catch (e) {
+          router.push("/");
+          setWrong(true);
+        }
+      }
+      setLoading(false);
+    }
+  };
   return (
     <div className="bg-white rounded-xl h-fit shadow-md text-gray-900 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shodow-3xl">
       <div className="relative w-full h-[300px] overflow-hidden rounded-t-xl">
@@ -68,8 +165,16 @@ export const PictureCard: React.FC<PictureProps> = ({ image, caption }) => {
           />
         )}
         {!editable && (
-          <div onClick={() => setEditable(true)} className="cursor-pointer">
-            <EditIcon className="w-6 stroke-gray-800" />
+          <div className="flex flex-col gap-4">
+            <div onClick={() => setEditable(true)} className="cursor-pointer">
+              <EditIcon className="w-6 stroke-gray-800" />
+            </div>
+            <div
+              onClick={() => deleteImage(imageraw || "")}
+              className="cursor-pointer"
+            >
+              <TrashIcon className="w-6 stroke-red-800" />
+            </div>
           </div>
         )}
         {editable && (
